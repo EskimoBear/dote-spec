@@ -1,4 +1,6 @@
 son
 ===
 
-son (s-expression object notation), is a lispy JSON based notation designed for declarative programming. son is used as the base notation for declarative DSLs.
+son (single object notation), is a JSON based notation designed for declarative programming. son and it's parsers are used as the base notation for developing declarative DSLs.
+
+A single is a JSON structure for defining a sort of s-expression.
