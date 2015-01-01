@@ -25,7 +25,7 @@ symbol = JSON_string
 single = "&", symbol : JSON_array | JSON_null
 ```
 
-If an array is provided as the value, it's elements are passed as parameters to the symbols function. The reader interprets a single with a null value as a 0-arity function call. If the length of the array does not match the arity expected by the function then an error is thrown. When the reader interprets a JSON member as a single it evaluates it and then removes the member from their current position in the eson document. An eson reader must retain these members in a special array with the keyword "env". The reader should allow the user to choose whether or not the "env" member should be shown.
+If an array is provided as the value, it's elements are passed as parameters to the symbols function. The reader interprets a single with a null value as a 0-arity function call. If the length of the array does not match the arity expected by the function then an error is thrown. When the reader interprets a JSON member as a single it evaluates it and then removes the member from their current position in the eson document. An eson reader must retain these members in a special array with the keyword "env". The reader should allow the user to choose whether or not the "env" member should be shown. This type of single is referred to as a *weak single* because it does not provide useful referrential transparency. It provides referrential transparency in the sense that the single will be replaced by the "empty member" but this is not a useful result for declarative combinination.
 
 ```JSON
 { 
@@ -34,7 +34,7 @@ If an array is provided as the value, it's elements are passed as parameters to 
 }
 ```
 
-For some singles it makes sense to have the result of their evaluation (if they return a result at all) mapped to a JSON name. Such singles are defined as values of a JSON pair and must be contained within JSON objects to be legal JSON. When the reader meets such a single it evaluates it and substitutes the single with the value it returns. To make this substitution result in legal JSON, such singles MUST be defined as a 1-tuple JSON object, i.e. with the single being the only pair present. This type of single is known as a value single and is the basis for JSON preprocessing in eson. 
+For some functions it makes sense to have the result of their evaluation (if they return a result at all) mapped to a JSON name. Singles that can evaluate and perform substitutions for functions are defined as values of a JSON pair and MUST be contained within a JSON object. When the reader meets such a single it evaluates it and substitutes the single with the value it returns. To make this substitution result in legal JSON, such singles MUST be defined as a 1-tuple JSON object, i.e. with the single being the only pair present. 
 
 ```JSON
 {
@@ -42,10 +42,10 @@ For some singles it makes sense to have the result of their evaluation (if they 
   "name2": {"&symbol2": null}
 }
 ```
-Singles get their name from the 1-tuple JSON object, the only context in which singles provide referrential transparency with the constraints of the JSON format.
+Singles get their name from the 1-tuple JSON object, the only context in which singles provide referrential transparency with the constraints of the JSON format. For this reason, the 1-tuple bounded single is the basis for JSON preprocessing in eson. 
 
 ###Comparison with s-expressions
-A single can be thought of as the poor man's s-expression. The similaities are borne out from the fact that they are both based pair structures.
+A single can be thought of as the poor man's s-expression. The similaities are borne out from the fact that they are both pair based structures.
 
 | s-expression | single |
 |--------------|--------|
