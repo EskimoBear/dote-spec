@@ -61,12 +61,19 @@ A single can be thought of as the poor man's s-expression. The similaities are b
 #Special form definitions
 The following is a list of eson's special forms:
 
+1. ref
 1. def
+1. doc
 1. proc
-2. ref
 2. this
 2. bind
-5. doc
+
+##ref
+ref takes a [JSON pointer](https://tools.ietf.org/html/rfc6901) and returns the specified JSON value.
+
+```JSON
+{ "&ref": "#/foo" }
+```
 
 ##def
 Def allows the user to create variables which adhere to the single-assingment rule, thus variables cannot be assigned twice. Calling `def` with `null` creates an unbounded variable.
@@ -79,3 +86,22 @@ Def allows the user to create variables which adhere to the single-assingment ru
 ```
 
 To refer to a variable in the eson document use the variable name prefixed with the `$` character.
+
+##doc
+Generate a doc pair for a given keyword and add it to a nested object for the keyword pair. In the example below `int_eson` and `int_json` are shown in the same document for effect.
+
+```JSON
+{
+  "int_eson": 90,
+  "&&doc": [
+    [
+      "int_eson",
+      "JSON can have integers"
+    ]
+  ],
+  "int_json": {
+    "value": 90,
+    "doc": "JSON can have integers"
+  }
+}
+```
