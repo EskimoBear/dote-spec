@@ -47,12 +47,12 @@ Singles get their name from the 1-tuple JSON object, the only context in which s
 ###Comparison with s-expressions
 A single can be thought of as the poor man's s-expression. The similaities are borne out from the fact that they are both pair based structures.
 
-| s-expression | single |
-|--------------|--------|
-| `(plus)`    | `{"&plus" : null}` |
-| `(plus 1)`  | `{"&plus" : [1]}` |
-| `(plus 1 2)`| `{"&plus" : [1, 2]}` |
-| `(plus 1 (minus 3 1)`| `{"&plus" : [1, {"&minus": [3, 1] } ]}` |
+| s-expr lisp | s-expr ebnf| single |
+|-------------|------------|--------|
+| `(plus)`    | ` plus | nil`| `{"&plus" : null}` |
+| `(plus 1)`  | `plus | 1 | nil` | `{"&plus" : [1]}` |
+| `(plus 1 2)`| `plus | 1 | 2 | nil` |`{"&plus" : [1, 2]}` |
+| `(plus 1 (minus 3 1))`| `plus| 1 | (minus | 3 | 1) | nil` | `{"&plus" : [1, {"&minus": [3, 1] } ]}` |
 
 #Special form definitions
 The following is a list of eson's base special forms.
