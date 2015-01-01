@@ -46,14 +46,14 @@ For some singles it makes sense to have their value (if they return a value at a
 ```
 
 ###Comparison with s-expressions
-A single can be thought of as the poor man's s-expression. 
+A single can be thought of as the poor man's s-expression. They are similar in the sense that they are both based on pair structures. Singles make use of JSON's pair syntax.
 
 | s-expression | single |
 |--------------|--------|
-| (plus)    | "&plus" : null |
-| (plus 1)  | "&plus" : [1] |
-| (plus 1 2)| "&plus" : [1, 2] |
-| (plus 1 (minus 3 1)| "&plus" : [1, {"&minus": [3, 1] } ] |
+| `(plus)`    | `{"&plus" : null}` |
+| `(plus 1)`  | `{"&plus" : [1]}` |
+| `(plus 1 2)`| `{"&plus" : [1, 2]}` |
+| `(plus 1 (minus 3 1)`| `{"&plus" : [1, {"&minus": [3, 1] } ]}` |
 
 #Special form definitions
 The following is a list of eson's base special forms.
