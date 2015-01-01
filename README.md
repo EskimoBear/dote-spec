@@ -14,22 +14,34 @@ There are JSON names called symbols that are identifiers for eson functions. All
 Special forms are symbols that map to functions in the reader. Special forms cannot be redefined or used in a manner contrary to this specification. In compliance with eson's declarative programming style, special forms strive to satisfy properties rather than execute commands or sequences of commands.
 
 ##Singles
-A single is a JSON structure for evaluating symbols such as special forms or eson defined relations. A single is a 1-tuple JSON object and thus MUST have only one pair. The pair's name MUST be a symbol and the value MUST be either an array or null. If an array is provided as the value, it's elements are passed as parameters to the symbols function. The reader interprets a single with a null value as a 0-arity function call. If the length of the array does not match the arity expected by the function then an error is thrown.  
+A single is a JSON structure for evaluating symbols which map to functions such as special forms or eson defined relations. A single is a JSON pair where the name MUST be a symbol and the value MUST be either an array or null. 
 
-```JSON
-{"name1" : { "&symbol1": ["param"] },
- "name2" : { "&symbol2": null }}
-```
-When the reader meets a single it evaluates it and substitutes the single with the value it returns. Thus, singles are always defined as values for JSON members. A single's syntax can be thought of as the poor man's s-expression. 
-
-Some functions do not need to be mapped to a JSON pair. For these functions, the symbol is prefixed with another `&` symbol and can be written as a JSON member instead of a single. 
-
-```JSON
-{ "name1": "value1",
-  "$$symbol": ["evn.core.button"]}
+```ebnf
+single = symbol : array | null
 ```
 
-When the reader meets a `&&` prefixed name in a JSON member it passes the member as a single element of `$proc`'s parameter list. The reader removes this member from it's initial position in the eson document during evaluation. `&&` is syntactic sugar for an explicit use of the special form `&proc`.
+If an array is provided as the value, it's elements are passed as parameters to the symbols function. The reader interprets a single with a null value as a 0-arity function call. If the length of the array does not match the arity expected by the function then an error is thrown.  
+
+When the reader meets a `&` prefixed name in a JSON member it evaluates the member as a single and removes the member from the eson document after evaluation. 
+
+```JSON
+{ 
+  "name1": "value1",
+  "&symbol1": ["param1"]
+}
+```
+
+For some singles it makes sense to have their value (if they return a value at all) mapped to a JSON name. Such singles are defined as values of a JSON pair and thus are contained within JSON objects. When the reader meets such a single it evaluates it and substitutes the single with the value it returns. Because of this substitution, such singles must be defined as a 1-tuple JSON object, with the single being the only pair present. This type of single is known as a value single.
+
+```JSON
+{
+  "name1": {"&symbol1": ["param"]},
+  "name2": {"&symbol2": null}
+}
+```
+
+###Comparison with s-expressions
+A single can be thought of as the poor man's s-expression. 
 
 #Special form definitions
 The following is a list of eson's base special forms.
