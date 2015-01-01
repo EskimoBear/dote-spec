@@ -53,7 +53,7 @@ A single can be thought of as the poor man's s-expression.
 | (plus)    | "&plus" : null |
 | (plus 1)  | "&plus" : [1] |
 | (plus 1 2)| "&plus" : [1, 2] |
-| (plus 1 (minus 3 1)| "&plus" : [1, {"&minus": [1, 2] } ] |
+| (plus 1 (minus 3 1)| "&plus" : [1, {"&minus": [3, 1] } ] |
 
 #Special form definitions
 The following is a list of eson's base special forms.
