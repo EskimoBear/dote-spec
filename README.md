@@ -8,21 +8,26 @@ eson (extensible single object notation), is a JSON based notation designed for 
 eson documents are valid JSON documents and conform to the [JSON format](http://json.org/). 
 
 ##Symbols
-There are JSON names called symbols that are identifiers for eson functions. All eson symbols are prefixed with the `&` character. eson has built in symbols called special forms but the user is free to define new symbols once they do not conflict with this set. 
+Symbols are identifiers for eson functions and relations. eson has built in symbols called special forms but the user is free to define new symbols once they do not conflict with this set. 
 
 ##Special forms
-Special forms are symbols that map to functions in the reader. Special forms cannot be redefined or used in a manner contrary to this specification. In compliance with eson's declarative programming style, special forms strive to satisfy properties rather than execute commands or sequences of commands.
+Special forms are symbols that map to functions in the eson reader. Special forms cannot be redefined or used in a manner contrary to their reader specification. In compliance with eson's declarative programming style, special forms strive to satisfy properties upon evaluation. This in contrast to executing commands or a sequences of commands.
 
 ##Singles
-A single is a JSON structure for evaluating symbols which map to functions such as special forms or eson defined relations. A single is a JSON pair where the name MUST be a symbol and the value MUST be either an array or null. 
+A single is a JSON structure for evaluating symbols. A single is a JSON pair which satisfies the following conditions:
+
+1. name MUST be prefixed with `&`
+1. string following the `&` prefix MUST be a symbol
+1. value MUST be either an array or null. 
 
 ```ebnf
-single = symbol : array | null
+symbol = JSON_string
+single = "&", symbol : JSON_array | JSON_null
 ```
 
 If an array is provided as the value, it's elements are passed as parameters to the symbols function. The reader interprets a single with a null value as a 0-arity function call. If the length of the array does not match the arity expected by the function then an error is thrown.  
 
-When the reader meets a `&` prefixed name in a JSON member it evaluates the member as a single and removes the member from the eson document after evaluation. 
+When the reader interprets a JSON member as a single it evaluates it and then removes the member from the eson document. 
 
 ```JSON
 { 
@@ -31,7 +36,7 @@ When the reader meets a `&` prefixed name in a JSON member it evaluates the memb
 }
 ```
 
-For some singles it makes sense to have their value (if they return a value at all) mapped to a JSON name. Such singles are defined as values of a JSON pair and thus are contained within JSON objects. When the reader meets such a single it evaluates it and substitutes the single with the value it returns. Because of this substitution, such singles must be defined as a 1-tuple JSON object, with the single being the only pair present. This type of single is known as a value single.
+For some singles it makes sense to have their value (if they return a value at all) mapped to a JSON name. Such singles are defined as values of a JSON pair and must be contained within JSON objects to be legal syntax. When the reader meets such a single it evaluates it and substitutes the single with the value it returns. Because of this substitution, such singles MUST be defined as a 1-tuple JSON object, i.e. with the single being the only pair present. This type of single is known as a value single.
 
 ```JSON
 {
