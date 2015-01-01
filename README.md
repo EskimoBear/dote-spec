@@ -59,10 +59,23 @@ A single can be thought of as the poor man's s-expression. The similaities are b
 | `(plus 1 (minus 3 1))`| `plus| 1 | (minus | 3 | 1) | nil` | `{"&plus" : [1, {"&minus": [3, 1] } ]}` |
 
 #Special form definitions
-The following is a list of eson's base special forms.
+The following is a list of eson's special forms:
 
+1. def
 1. proc
 2. ref
 2. this
 2. bind
 5. doc
+
+##def
+Def allows the user to create variables which adhere to the single-assingment rule, thus variables cannot be assigned twice. Calling `def` with `null` creates an unbounded variable.
+
+```JSON
+{ 
+  "&def" : ["variable_name", "value"],
+  "&def" : ["unbounded", null]
+}
+```
+
+To refer to a variable in the eson document use the variable name prefixed with the `$` character.
