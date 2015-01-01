@@ -36,7 +36,7 @@ When the reader interprets a JSON member as a single it evaluates it and then re
 }
 ```
 
-For some singles it makes sense to have their value (if they return a value at all) mapped to a JSON name. Such singles are defined as values of a JSON pair and must be contained within JSON objects to be legal syntax. When the reader meets such a single it evaluates it and substitutes the single with the value it returns. Because of this substitution, such singles MUST be defined as a 1-tuple JSON object, i.e. with the single being the only pair present. This type of single is known as a value single.
+For some singles it makes sense to have their value (if they return a value at all) mapped to a JSON name. Such singles are defined as values of a JSON pair and must be contained within JSON objects to be legal syntax. When the reader meets such a single it evaluates it and substitutes the single with the value it returns. Because of this substitution, such singles MUST be defined as a 1-tuple JSON object, i.e. with the single being the only pair present. This type of single is known as a value single and is the basis for JSON preprocessing in eson.
 
 ```JSON
 {
