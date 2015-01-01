@@ -57,9 +57,9 @@ A single can be thought of as the poor man's s-expression. The similaities are b
 
 #Special form definitions
 The following is a list of eson's base special forms.
-1. &ref
-2. &this
-2. &bind
-3. &proc
-4. &fn
-5. &doc
+
+1. proc
+2. ref
+2. this
+2. bind
+5. doc
