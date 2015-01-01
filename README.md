@@ -13,7 +13,7 @@ Symbols are identifiers for eson functions and relations. eson has built in symb
 Special forms are symbols that map to functions in the eson reader. Special forms cannot be redefined or used in a manner contrary to their reader specification. In compliance with eson's declarative programming style, special forms strive to satisfy properties upon evaluation. This in contrast to executing commands or a sequences of commands.
 
 ##Singles
-A single is a JSON structure for evaluating symbols and extend the JSON format by enabling declarative programmability. Singles are a fundamental facility of the notation because they allow eson documents to be parsed as an unordered set of evaluations and records. An eson reader is responsible for recognizing and evaluating singles in eson documents.
+A single is a JSON structure for calling procedures; the single syntax combined with reader handler functions enables declarative programming in JSON documents. Singles are a fundamental facility of the notation because they allow eson documents to be parsed as an unordered set of procedures and records. The eson reader is responsible for recognizing singles and evaluating the respective functions in eson documents.
 
 A single is a JSON pair which satisfies the following conditions:
 
