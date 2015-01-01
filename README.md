@@ -14,7 +14,7 @@ Symbols are identifiers for eson functions and relations. eson has built in symb
 Special forms are symbols that map to functions in the eson reader. Special forms cannot be redefined or used in a manner contrary to their reader specification. In compliance with eson's declarative programming style, special forms strive to satisfy properties upon evaluation. This in contrast to executing commands or a sequences of commands.
 
 ##Singles
-A single is a JSON structure for evaluating symbols. A single is a JSON pair which satisfies the following conditions:
+A single is a JSON structure for evaluating symbols. Singles are important because they allow eson documents to be parsed as an unordered set of evaluations and data structures. A single is a JSON pair which satisfies the following conditions:
 
 1. name MUST be prefixed with `&`
 1. string following the `&` prefix MUST be a symbol
@@ -25,9 +25,7 @@ symbol = JSON_string
 single = "&", symbol : JSON_array | JSON_null
 ```
 
-If an array is provided as the value, it's elements are passed as parameters to the symbols function. The reader interprets a single with a null value as a 0-arity function call. If the length of the array does not match the arity expected by the function then an error is thrown.  
-
-When the reader interprets a JSON member as a single it evaluates it and then removes the member from the eson document. 
+If an array is provided as the value, it's elements are passed as parameters to the symbols function. The reader interprets a single with a null value as a 0-arity function call. If the length of the array does not match the arity expected by the function then an error is thrown. When the reader interprets a JSON member as a single it evaluates it and then removes the member from their current position in the eson document. An eson reader must retain these members in a special array with the keyword "env". The reader should allow the user to choose whether or not the "env" member should be shown.
 
 ```JSON
 { 
@@ -36,7 +34,7 @@ When the reader interprets a JSON member as a single it evaluates it and then re
 }
 ```
 
-For some singles it makes sense to have their value (if they return a value at all) mapped to a JSON name. Such singles are defined as values of a JSON pair and must be contained within JSON objects to be legal syntax. When the reader meets such a single it evaluates it and substitutes the single with the value it returns. Because of this substitution, such singles MUST be defined as a 1-tuple JSON object, i.e. with the single being the only pair present. This type of single is known as a value single and is the basis for JSON preprocessing in eson.
+For some singles it makes sense to have the result of their evaluation (if they return a result at all) mapped to a JSON name. Such singles are defined as values of a JSON pair and must be contained within JSON objects to be legal JSON. When the reader meets such a single it evaluates it and substitutes the single with the value it returns. To make this substitution result in legal JSON, such singles MUST be defined as a 1-tuple JSON object, i.e. with the single being the only pair present. This type of single is known as a value single and is the basis for JSON preprocessing in eson. 
 
 ```JSON
 {
@@ -44,9 +42,10 @@ For some singles it makes sense to have their value (if they return a value at a
   "name2": {"&symbol2": null}
 }
 ```
+Singles get their name from the 1-tuple JSON object, the only context in which singles provide referrential transparency with the constraints of the JSON format.
 
 ###Comparison with s-expressions
-A single can be thought of as the poor man's s-expression. They are similar in the sense that they are both based on pair structures. Singles make use of JSON's pair syntax.
+A single can be thought of as the poor man's s-expression. The similaities are borne out from the fact that they are both based pair structures.
 
 | s-expression | single |
 |--------------|--------|
