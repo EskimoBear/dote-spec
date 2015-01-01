@@ -4,10 +4,13 @@ eson
 eson (extensible single object notation), is a JSON based notation designed for declarative programming. eson and it's parsers are used as the base notation for simple JSON preprocessing and declarative DSLs. 
 
 #Syntax
-eson documents are valid JSON documents and conform to the [JSON format](http://json.org/). 
+eson documents are valid JSON documents and conform to the [JSON format](http://json.org/).  
 
 ##Symbols
 Symbols are identifiers for eson functions and relations. eson has built in symbols called special forms but the user is free to define new symbols once they do not conflict with this set. 
+
+##Records
+The eson reader accepts all JSON pairs without prefixed names as record declarations.
 
 ##Special forms
 Special forms are symbols that map to functions in the eson reader. Special forms cannot be redefined or used in a manner contrary to their reader specification. In compliance with eson's declarative programming style, special forms strive to satisfy properties upon evaluation. This in contrast to executing commands or a sequences of commands.
