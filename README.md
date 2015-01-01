@@ -1,7 +1,7 @@
 eson
 ===
 
-eson (extensible single object notation), is a JSON based notation designed for declarative programming. eson and it's parsers are used as the base notation for simple JSON preprocessing or for developing declarative DSLs. 
+eson (extensible single object notation), is a JSON based notation designed for declarative programming. eson and it's parsers are used as the base notation for simple JSON preprocessing and declarative DSLs. 
 
 #Syntax
 eson documents are valid JSON documents and conform to the [JSON format](http://json.org/). 
