@@ -48,6 +48,13 @@ For some singles it makes sense to have their value (if they return a value at a
 ###Comparison with s-expressions
 A single can be thought of as the poor man's s-expression. 
 
+| s-expression | single |
+|--------------|--------|
+| (plus)    | "&plus" : null |
+| (plus 1)  | "&plus" : [1] |
+| (plus 1 2)| "&plus" : [1, 2] |
+| (plus 1 (minus 3 1)| "&plus" : [1, {"&minus": [1, 2] } ] |
+
 #Special form definitions
 The following is a list of eson's base special forms.
 1. &ref
