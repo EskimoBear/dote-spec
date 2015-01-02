@@ -88,7 +88,7 @@ def allows the user to create variables which adhere to the single-assingment ru
 To refer to a variable in the eson document use the variable name prefixed with the `$` character.
 
 ##doc
-Generate a doc pair for a given keyword and add it to a nested object for the keyword pair. In the example below `int_eson` and `int_json` are shown in the same document for effect.
+Generate a doc pair for a given keyword and add it to a nested object for the keyword pair. In the example below `int_eson` and `int_json` are shown in the same document for brevity.
 
 ```JSON
 {
