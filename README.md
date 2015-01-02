@@ -76,7 +76,7 @@ ref takes a [JSON pointer](https://tools.ietf.org/html/rfc6901) and returns the 
 ```
 
 ##def
-Def allows the user to create variables which adhere to the single-assingment rule, thus variables cannot be assigned twice. Calling `def` with `null` creates an unbounded variable.
+def allows the user to create variables which adhere to the single-assingment rule, thus variables cannot be assigned twice. Calling `def` with `null` creates an unbounded variable.
 
 ```JSON
 { 
