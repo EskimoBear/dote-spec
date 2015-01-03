@@ -1,10 +1,13 @@
 eson
 ===
 
-eson (extensible single object notation), is a JSON based notation designed for declarative programming. eson and it's parsers are used as the base notation for simple JSON preprocessing and declarative DSLs. 
+eson (extensible single object notation), is a notation for declarative programming. eson is a superset of JSON and eson programs are legal JSON, thus eson is easy for everyone familiar with JSON to read and understand. eson and it's parser are used for simple JSON preprocessing and as the base notation for declarative external DSLs. 
 
 #Syntax
-eson documents are valid JSON documents and conform to the [JSON format](http://json.org/).  
+eson programs use valid JSON syntax and conform to the [JSON format](http://json.org/), JSON structures such as objects, pairs and values are specific forms of their equivalents in eson. eson extends the semantic expression of JSON, adding programmable declarativeness to the descriptive declarativeness JSON already provides. 
+
+## Declarations
+eson programs are made up of unordered declarations. The JSON pair is a member of the set of the set of declaration types defined by eson and it's semantics are maintained by eson. As a result, an eson program can be converted to it's semantic JSON equivalent by removing all declaration types save for JSON pairs.  
 
 ##Symbols
 Symbols are identifiers for eson functions and relations. eson has built in symbols called special forms but the user is free to define new symbols once they do not conflict with this set. 
