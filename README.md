@@ -47,6 +47,18 @@ A single is a JSON object which satisfies the following conditions:
 
 Singles get their name from being a 1-tuple JSON object. A JSON object is unordered thus does not normally qualify as a tuple but the 1 element unordered collection is a special case as its ordering is equivalent to the 1 element ordered collection. 
 
+###Single or call?
+There exists a special case where an eson program consists of a single call. The question this raises is whether this is interpreted as a single or a call? It's actually both.
+
+```JSON
+{
+  "&special-form": ["param"]
+}
+EOF
+```
+
+The eson reader will treat this as a single where the call is evaluated but no substitution is possible because the resulting JSON document is the empty document `{}` and no substitution can take place within the empty document. Thus the observed result is that of a call and not a single. In this scenario the eson reader should return the value of the call instead of nil. 
+
 #Special form definitions
 The following is a list of eson's special forms:
 
