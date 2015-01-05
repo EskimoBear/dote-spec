@@ -60,7 +60,7 @@ EOF
 The eson reader will treat this as a single where the call is evaluated but no substitution is possible because the resulting JSON document is the empty document `{}` and no substitution can take place within the empty document. Thus the observed result is that of a call and not a single. This illustrates that the single is an eson program, in this scenario the eson reader should return the value of the call instead of nil. 
 
 #Special form definitions
-The following describe eson's special forms:
+The following describe eson's special forms.
 
 ##let
 Let performs variable creation which allows the use of unbounded variables in eson programs. Let is a special form which takes an array of JSON strings and creates unbound variables for each element of the array. let can only be called once per program and should appear as a call as it evaluates to null. An unbound or bound variable is referenced by the `$` prefix in the program.
