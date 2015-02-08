@@ -7,7 +7,7 @@ eson (extensible *single* object notation) is a language for declarative program
 eson programs use valid JSON syntax and conform to the [JSON format](http://json.org/), JSON structures such as objects, pairs and values are specific forms of their equivalents in eson. eson extends the semantic expression of JSON, adding programmable declarativeness to the data notation JSON provides. eson programs are made up of unordered declarations, the three types of declaration are attributes, calls and lets.
 
 ##Attributes
-The attribute is a regular JSON name/vaule pair. The eson reader accepts all JSON pairs without prefixes of '&' and '&' as variable assignment operations. Where the key/name is the identifier name and the value is the data bound to the variable. The identifier can be referenced in the program by the `$` prefix.__
+The attribute is a regular JSON name/vaule pair. The eson reader accepts all JSON pairs without prefixes of '&' and '&' as variable assignment operations. Where the key/name is the identifier name and the value is the data bound to the variable. The identifier can be referenced in the program by the `$` prefix.
 
 ##Special forms
 Special forms are procedures/functions in the eson reader. In compliance with eson's declarative programming style, special forms satisfy properties of the program upon evaluation. This is in contrast to executing commands or a sequences of commands in an imperative programming style. All special forms guarantee *referential transparency*.
@@ -88,7 +88,6 @@ There exists a special case where an eson program consists of a single call. The
 {
   "&special-form": ["param"]
 }
-EOF
 ```
 
 The eson reader will treat this as a single where the call is evaluated but no substitution is possible because the resulting JSON document is the empty document `{}` and no substitution can take place within the empty document. Thus the observed result is that of a call and not a single. This illustrates that the single is just a regular eson program. In this scenario the eson reader should return the value of the call instead of nil.
