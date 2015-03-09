@@ -12,7 +12,7 @@ eson programs use valid JSON syntax and conform to the [JSON format](http://json
 The attribute is a regular JSON name/vaule pair. In eson, JSON pairs perfom variable assignment operations, where the key/name is the identifier name and the value is the data bound to the variable. The variable identifier can be referenced in the program by the `$` prefix.
 
 ```JSON
-{"name": "John Smith"
+{"name": "John Smith",
  "docstring": "$name works at the Post Office"}
 ```
 
@@ -20,7 +20,7 @@ The attribute is a regular JSON name/vaule pair. In eson, JSON pairs perfom vari
 The let declaration is a `special form` which creates unbound variables in the eson document.
 
 ```JSON
-{"&let":["red","blue"]}
+{"&let": ["red","blue"]}
 ```
 
 The eson document above creates two variables `$red` and `$blue`which are not bound to any values.
@@ -33,7 +33,7 @@ A call is an eson primitive for performing procedure application. A call is a JS
 1. and the JSON value MUST be either an array, null or a single. 
 
 ```JSON
-{ name": "John Smith",
+{ "name": "John Smith",
   "&special-form": ["param"] }
 ```
 
@@ -54,9 +54,7 @@ Singles get their name as a result of being a tuple which is always of length 1.
 There exists a special case where an eson program consists of a single call. The question this raises is whether this is interpreted as a single or a call? It's actually both and neither.
 
 ```JSON
-{
-  "&special-form": ["param"]
-}
+{ "&special-form": ["param"] }
 ```
 
 The eson compiler will treat this as a single where the call is evaluated but no substitution is possible because the resulting JSON document is the empty document `{}` and no substitution can take place within the empty document. Thus the observed result is that of a call and not a single. This illustrates that the single is just a regular eson program. In this scenario the eson compiler should return the value of the call instead of nil.
@@ -68,10 +66,10 @@ Special forms are procedures/functions built into the eson compiler which provid
 the let special form performs variable creation which allows the use of unbounded variables in eson programs. Let takes an array of JSON strings and creates unbound variables for each element of the array. let can only be called once per program and should appear as a call as it evaluates to null. An unbound or bound variable is referenced by the `$` prefix in the program.
 
 ```JSON
-"&let":["red","blue"]
+"&let":["foo"]
 ```
 
-The snippet above creates two variables `$red` and `$blue`.
+The snippet above creates the unbound variable `$foo`.
 
 ###ref
 ref takes a [JSON pointer](https://tools.ietf.org/html/rfc6901) and returns the specified JSON value.
