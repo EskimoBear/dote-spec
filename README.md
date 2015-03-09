@@ -5,8 +5,6 @@ eson (extensible *single* object notation) is an extension language for JSON.
 
 eson documents extend the strictly descriptive capabilities of JSON to provide features such as variables and composition. The eson compiler allows you to extend the features of the language so you can quickly add any features you would like to use. You can also go so far as to create declarative DSLs as the compiler can generate code in different programming languages. 
 
-Doing declarative programming with eson gives you the familiarity and ease of use of JSON and the flexibility to extend. 
-
 #Syntax
 eson programs use valid JSON syntax and conform to the [JSON format](http://json.org/), eson extends the semantic expression of JSON to inculde programmable declarativeness. eson programs are made up of unordered declarations, the three types of declarations are lets, calls and attributes.
 
