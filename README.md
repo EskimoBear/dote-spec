@@ -1,7 +1,7 @@
 eson
 ===
 
-eson is a declarative programming language based on JSON. eson (*e-son* that's *e* as in dr**e**ss) is an acronym for "extensible *single* object notation"; a single is one of the 'structures' eson uses for procedure application. eson goes beyond the data description of JSON to provide features such as variables, and procedure application. 
+eson is a declarative programming language based on JSON. eson (*e-son* i.e *e* as in dr*e*ss) is an acronym for "extensible single object notation"; a single is one of the 'structures' eson uses for procedure application. eson goes beyond the data description of JSON to provide features such as variables, and procedure application. 
 
 #Syntax
 eson programs use valid JSON syntax and conform to the [JSON format](http://json.org/).
@@ -10,7 +10,7 @@ eson programs use valid JSON syntax and conform to the [JSON format](http://json
 eson programs are made up of unordered declarations, there are two types of declaration: calls and attributes.
 
 ###Attributes
-An attribute is a regular JSON name and value pair. In eson, JSON pairs perfom variable assignment operations, where the key/name is the identifier name and the value is the data bound to the variable. Attributes cannot begin with `$` or `&` as these have special meaning in eson.
+An attribute is a regular JSON name and value pair. In eson, JSON pairs perfom the variable assignment operation, where the name/key is the identifier name and the value is the data bound to the variable. Attributes cannot begin with `$` or `&` as these are reserved.
 
 ###Calls
 A call is an eson primitive for performing procedure application. A call is a JSON pair which allows procedures defined in the eson compiler to be evaluated in the eson program.
@@ -19,8 +19,8 @@ The following snippet illustrates a call:
 
 ```JSON
 {
-  "name": "John Smith",
-  "&let": ["var1", "var2"]
+  "&let": ["var1", "var2"],
+  name": "John Smith"
 }
 ```
 
@@ -45,7 +45,7 @@ When the compiler interprets a call it first evaluates it and then removes the p
 Because JSON objects are not recursive data structures, procedure application takes two forms. One form supports evaluation while the other form supports both evaluation and substitution. The previously mentioned `call` provides the first type of procedure application where the procedure is evaluated but the output (if any) is not retained. eson has a structure known called a single that can perform procedure application with substitution.
 
 ###Singles
-A single is a JSON object containing one and only one call. After the single is evaluated the single is substituted by the result of the procedure application. A call can be thought of as a *weak single* because it does not provide substitution. Since singles can appear anywhere a JSON value can, there are no duplication concerns as with calls and singles may be used any time a JSON pair is defined.
+A single is a JSON object containing one and only one call. After the single is evaluated it is substituted by the result of the procedure evaluation. A call can be thought of as a *weak single* because it does not provide substitution. Since singles can appear anywhere a JSON value can, there are no duplication concerns as with calls and singles may be used any time a JSON pair is defined.
 
 A single is a JSON object which satisfies the following conditions:
 
