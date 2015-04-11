@@ -20,7 +20,7 @@ The following snippet illustrates a call:
 ```JSON
 {
   "&let": ["var1", "var2"],
-  name": "John Smith"
+  "name": "John Smith"
 }
 ```
 
