@@ -1,7 +1,7 @@
 eson
 ===
 
-eson is a declarative programming language based on JSON. eson (*e-son* i.e *e* as in dr*e*ss) is an acronym for "extensible single object notation"; a single is one of the 'structures' eson uses for procedure application. eson goes beyond the data description of JSON to provide features such as variables, and procedure application. 
+eson is a declarative programming language based on JSON. eson goes beyond the data notation of JSON to provide features such as variables, and procedure application. eson (*e-son* i.e *e* as in dr*e*ss) is an acronym for "extensible single object notation"; a single is one of the 'structures' eson uses for procedure application.
 
 #Syntax
 eson programs use valid JSON syntax and conform to the [JSON format](http://json.org/).
