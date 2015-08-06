@@ -1,90 +1,26 @@
 Dote
 ===
 
-Dote is a declarative programming language based on JSON. Dote goes beyond the data notation of JSON to provide features such as variables, and procedure application.
+Dote is a JSON extension language, which adds variables and procedure application to JSON.
 
 #Syntax
-Dote programs use valid JSON syntax and conform to the [JSON format](http://json.org/).
+Dote programs are valid JSON and conform to the [JSON format](http://json.org/).
 
-##Declarations
-Dote programs are made up of unordered declarations, there are two types of declaration: calls and attributes.
+#Programs
+A JSON object corresponds to a Dote program. Nested JSON objects are themselves Dote programs.
 
-###Attributes
-An attribute is a regular JSON name and value pair. In Dote, JSON pairs perfom the variable assignment operation, where the name/key is the identifier name and the value is the data bound to the variable. Attributes cannot begin with `$` or `&` as these are reserved.
+#Declarations
+Dote programs are made up of unordered declarations. There are two types of declarations: calls and attributes.
 
-###Calls
-A call is an Dote primitive for performing procedure application. A call is a JSON pair which allows procedures defined in the Dote compiler to be evaluated in the Dote program.
-
-The following snippet illustrates a call:
+#Attributes
+An attribute is a regular JSON key and value pair. In Dote, pairs are used for variable assignment, where the key is the identifier name and the value is the data bound to the variable. Attributes cannot begin with either `$` or `&` as these symbols are reserved. The snippet below shows an attribute,
 
 ```JSON
-{
-  "&let": ["var1", "var2"],
-  "name": "John Smith"
-}
+{ "name": "John Smith" }
 ```
 
-this compiles to:
-
-```JSON
-{
-  "name": "John Smith"
-}
-```
-
-A call is a JSON pair which satisfies the following conditions:
-
-1. the JSON key MUST be prefixed with `&`,
-1. string following the `&` prefix MUST be the name of a special form,
-1. and the JSON value MUST be either an array, null or a single. 
-
-If an array is provided as the value, it's elements are passed as parameters to the procedure. The compiler interprets a call with a null value as a 0-arity function call. If the length of the array does not match the arity expected by the procedure then an error is thrown.
-When the compiler interprets a call it first evaluates it and then removes the pair from it's current position in the Dote program. The compiled JSON by default does not contain these calls, but the user can instruct the compiler to return the calls in the document as a special pair with key "env". Because duplicate keys are not legal JSON, a special form or procedure can only be used in a call once per program.
-
-##Procedure Application
-Because JSON objects are not recursive data structures, procedure application takes two forms. One form supports evaluation while the other form supports both evaluation and substitution. The previously mentioned `call` provides the first type of procedure application where the procedure is evaluated but the output (if any) is not retained. Dote has a structure known called a single that can perform procedure application with substitution.
-
-###Singles
-A single is a JSON object containing one and only one call. After the single is evaluated it is substituted by the result of the procedure evaluation. A call can be thought of as a *weak single* because it does not provide substitution. Since singles can appear anywhere a JSON value can, there are no duplication concerns as with calls and singles may be used any time a JSON pair is defined.
-
-A single is a JSON object which satisfies the following conditions:
-
-1. has one declaration;
-1. and the declaration is a call.
-
-The snippet below illustrates a single with the imaginary special form `&get-first-name`:
-
-```JSON
-{
-  "name": {
-    "&get-first-name": ["Caroline Spencer"]
-  }
-}
-```
-
-this compiles to:
-
-```JSON
-{
-  "name": "Caroline"
-}
-```
-
-Singles get their name as a result of being a tuple which is always of length 1. A JSON object is unordered so does not normally qualify as a tuple but with one item an unordered collection is equivalent to an ordered one.
-
-###Single or call?
-There exists a special case where an Dote program consists of a single call. The question this raises is whether this is interpreted as a single or a call? It's actually both and neither.
-
-```JSON
-{
-  "&special-form": ["param"]
-}
-```
-
-The Dote compiler will treat this as a single where the call is evaluated but no substitution is possible because the resulting JSON document is the empty document `{}` and no substitution can take place within the empty document. Thus the observed result is that of a call and not a single. This illustrates that the single is just a regular Dote program. In this scenario the Dote compiler should return the value of the call instead of nil.
-
-##Variables
-Attribute declarations create variables which can be referenced in an Dote program by the attribute name. To reference a variable identifier one must prefix the attribute name with the `$` prefix, thus variable identifiers are strings. Variable identifiers are substituted with the attribute value when the program is compiled.
+#Variables
+To reference a variable identifier one must prefix the attribute name with the `$` prefix. Variable identifiers are substituted with the attribute value when the Dote program is compiled.
 
 To illustrate the Dote program below:
 
@@ -104,14 +40,57 @@ compiles to
 }
 ```
 
-##Special forms
-Special forms are functions built into the Dote compiler which provide Dote with programmable capabilities. In compliance with Dote's declarative programming style, special forms satisfy properties of the program upon evaluation. This is in contrast to executing commands or a sequences of commands in an imperative programming style.
+#Calls
+A call is a pair used for procedure application. A call passes control to a procedure defined in the key; the value given in the pair is passed as the procedure's parameter/s. A call is a JSON pair which satisfies the following conditions:
 
-###let
-the let special form performs variable creation which allows the use of unbounded variables in Dote programs. Let takes an array of JSON strings and creates unbound variables for each element of the array. let can only be called once per program and should appear as a call as it evaluates to null. An unbound variable is referenced by the `$` prefix in the program in the same way bound variables.
+1. the JSON key MUST be prefixed with `&`;
+1. the string following the `&` prefix MUST be the name of a procedure recognized by the compiler;
+1. and the JSON value MUST be either null, an array, or a single.
+
+The following snippet illustrates a call:
 
 ```JSON
-  "&let":["foo"]
+{ "&let": ["var1", "var2"] }
 ```
 
-The snippet above creates the unbound variable `$foo`.
+If an array is provided as the value, it's elements are passed as parameters to the procedure. If a valid value is provided the pair is considered a 1-arity procedure call. However, if the value is null the call is considered a 0-arity procedure call. Because duplicate keys are not legal JSON, a procedure can only be used in a call once per program. Calls are evaluated but are not retained in the generated JSON.
+
+#Singles
+Dote has another structure for procedure application called a single. Unlike a call, a single supports procedure application with evaluation and substitution. A single is a nested program comprised solely of one call. After the single is evaluated it is substituted by the result of the procedure evaluation. Singles may be used any time a JSON pair is defined.
+
+A single is a Dote program which satisfies the following conditions:
+
+1. has one declaration;
+1. and the declaration is a call.
+
+The snippet below illustrates a single with the imaginary procedure `&get-first-name`:
+
+```JSON
+{
+  "name": {
+    "&get-first-name": ["Caroline Spencer"]
+  }
+}
+```
+
+which compiles to:
+
+```JSON
+{
+  "name": "Caroline"
+}
+```
+
+When a Dote program is a single no substitution can take place and the resulting JSON document is `{}`.
+
+#Special pairs
+Special pairs are the built in abstractions in Dote.
+
+##let
+the let special pair performs variable creation which allows the use of unbounded variables in Dote programs. `let` takes an array of JSON strings and creates unbound variables for each element of the array. Unbound variable are referenced by the `$` prefix in the rest of the program. The snippet below creates the unbound variable `$foo`.
+
+```JSON
+{
+  "&let": ["foo"]
+}
+```
