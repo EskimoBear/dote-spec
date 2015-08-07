@@ -1,7 +1,7 @@
 Dote
 ===
 
-Dote is a JSON extension language, which adds variables and procedure application to JSON.
+Dote is a JSON extension language which adds variables and procedure application to JSON.
 
 #Syntax
 Dote programs are valid JSON and conform to the [JSON format](http://json.org/).
@@ -84,7 +84,7 @@ which compiles to:
 When a Dote program is a single no substitution can take place and the resulting JSON document is `{}`.
 
 #Special pairs
-Special pairs are the built in abstractions in Dote.
+Special pairs are the built-in procedures in Dote.
 
 ##let
 the let special pair performs variable creation which allows the use of unbounded variables in Dote programs. `let` takes an array of JSON strings and creates unbound variables for each element of the array. Unbound variable are referenced by the `$` prefix in the rest of the program. The snippet below creates the unbound variable `$foo`.
